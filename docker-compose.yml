@@ -1,0 +1,43 @@
+version: '3.4'
+services:
+  db:
+    image: hudsonsdi/postgress-BackEnd-SpringBoot-RestFull-Pratica-1
+    command: postgress --default-authentication-plugin=postgress_native_password
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      POSTGRESS_ROOT_PASSWORD: postgres
+      POSTGRESS_USER: postgres
+      POSTGRESS_PASSWORD: 1234
+      POSTGRESS_DATABASE: dados-pratica-1
+    ports:
+      - "5432:5432"
+    networks:
+      - pratica1-network
+  BackEnd-SpringBoot-RestFull-Pratica-1:
+    image: hudsonsdi/BackEnd-SpringBoot-RestFull-Pratica-1
+    restart: always
+    build: ./BackEnd-SpringBoot-RestFull-Pratica-1
+    working_dir: /BackEnd-SpringBoot-RestFull-Pratica-1
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_BOOT_ENVIROMENT: Production
+    volumes:
+      - ./BackEnd-SpringBoot-RestFull-Pratica-1:/BackEnd-SpringBoot-RestFull-Pratica-1
+      - ~/m.2:/root/.m2
+    ports:
+      - "8080:8080"
+    command: mvn clean spring-boot:run
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - pratica1-network
+networks: 
+  pratica1-network:
+    driver: bridge
+

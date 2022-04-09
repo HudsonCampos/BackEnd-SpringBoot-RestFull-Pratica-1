@@ -30,8 +30,7 @@ public class Carro implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@SequenceGenerator(name = "seq_carro", sequenceName = "seq_carro", allocationSize = 1)
-	@GeneratedValue(generator = "seq_carro", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	
 	//@NotEmpty(message = "{campo.marca.obrigatorio}")

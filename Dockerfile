@@ -1,2 +1,2 @@
-FROM postgresql:42.3.3
-EXPOSE 5432
+FROM mysql:8.0.28
+EXPOSE 3308
